@@ -1,6 +1,9 @@
+from cv2 import threshold
 import pyautogui
 
+
 last_position = (None,None)
+
 last_dir = ''
 
 def keypress():
@@ -39,10 +42,40 @@ def trackpad_mouse():
 
     def on_move(x, y):
         # put your code here
-        pass
+        global last_position
+        global last_dir
+        if last_position[0] == None or last_position[1] == None:
+            last_position = (x,y)
+        else:
+            xdif =  x - last_position[0]
+            ydif = y - last_position[1] 
+            threshold = 5
+            if abs(xdif) > threshold or abs(ydif) > threshold:
+                if xdif > ydif:
+                    if xdif > 0:
+                        last_dir = 'up'
+                       # print('right')
+                    else:
+                        last_dir = 'down'
+                      #  print('left')
+                else:
+                    if ydif > 0:
+                        last_dir = 'right'
+                       # print('up')
+                    else:
+                        last_dir = 'left'
+                       # print('down')
+        pyautogui.press(last_dir)
+       # print(last_dir)
+        last_position = (x,y)
+        #print(last_position)
 
-    #with mouse.Listener(on_move=on_move) as listener:
-    #    listener.join() 
+
+        
+        
+
+    with mouse.Listener(on_move=on_move) as listener:
+        listener.join() 
 
 def color_tracker():
     import cv2
