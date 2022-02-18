@@ -70,10 +70,6 @@ def trackpad_mouse():
                 last_position = (x,y)
                 print(last_position)
 
-
-        
-        
-
     with mouse.Listener(on_move=on_move) as listener:
         listener.join() 
 
