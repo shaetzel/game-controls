@@ -11,22 +11,7 @@ def keypress():
 
     import keyboard
 # put your code here
- 
     
-    
-
-
-def trackpad_mouse():
-    ''' 
-    Control the game by moving the mouse/finger on trackpad left, right, up, or down. 
-    '''
-
-    from pynput import mouse
-
-    def on_move(x, y):
-        # put your code here
-        pass
-        
 
     with mouse.Listener(on_move=on_move) as listener:
         listener.join() 
