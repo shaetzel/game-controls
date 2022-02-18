@@ -39,10 +39,10 @@ def trackpad_mouse():
 
     def on_move(x, y):
         # put your code here
-    
+        pass
 
-    with mouse.Listener(on_move=on_move) as listener:
-        listener.join() 
+    #with mouse.Listener(on_move=on_move) as listener:
+    #    listener.join() 
 
 def color_tracker():
     import cv2
