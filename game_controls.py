@@ -49,26 +49,26 @@ def trackpad_mouse():
         else:
             xdif =  x - last_position[0]
             ydif = y - last_position[1] 
-            threshold = 5
+            threshold = 300
             if abs(xdif) > threshold or abs(ydif) > threshold:
-                if xdif > ydif:
+                if abs(xdif) > abs(ydif):
                     if xdif > 0:
-                        last_dir = 'up'
-                       # print('right')
-                    else:
-                        last_dir = 'down'
-                      #  print('left')
-                else:
-                    if ydif > 0:
                         last_dir = 'right'
-                       # print('up')
+                        print('right')
                     else:
                         last_dir = 'left'
-                       # print('down')
-        pyautogui.press(last_dir)
-       # print(last_dir)
-        last_position = (x,y)
-        #print(last_position)
+                        print('left')
+                else:
+                    if ydif > 0:
+                        last_dir = 'down'
+                        print('up')
+                    else:
+                        last_dir = 'up'
+                        print('down')
+                pyautogui.press(last_dir)
+                print(last_dir)
+                last_position = (x,y)
+                print(last_position)
 
 
         
