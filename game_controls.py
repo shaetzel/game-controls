@@ -49,7 +49,7 @@ def trackpad_mouse():
         else:
             xdif =  x - last_position[0]
             ydif = y - last_position[1] 
-            threshold = 300
+            threshold = 200
             if abs(xdif) > threshold or abs(ydif) > threshold:
                 if abs(xdif) > abs(ydif):
                     if xdif > 0:
