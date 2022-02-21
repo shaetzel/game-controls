@@ -99,17 +99,17 @@ def color_tracker():
     while True:
         # your code here
         frame = vs.read()
-        cv2.flip(frame, 1)
+        flippedFrame = cv2.flip(frame, 1)
 
-        imutils.resize(frame, width = 600)
-        cv2.GaussianBlur(frame, (5,5), 0)
-        cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        resizedFrame = imutils.resize(flippedFrame, width = 600)
+        blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
+        HSVframe = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2HSV)
         #mask
-        mask = cv2.inRange(frame, colorLower, colorUpper)
+        mask = cv2.inRange(HSVframe, colorLower, colorUpper)
         erosion = cv2.erode(mask, None, iterations=2)
-        dilation = cv2.dilate(mask, None, iterations=2)
-        contours = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
-    # unsure about the list
+        dilation = cv2.dilate(erosion, None, iterations=2)
+        contours,_ = cv2.findContours(dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # unsure about the list
         center = None
         if len(contours) > 0:
             maxContour = max(contours, key = cv2.contourArea)
