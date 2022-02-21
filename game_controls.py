@@ -1,4 +1,5 @@
 from cv2 import threshold
+from matplotlib.pyplot import contour
 import pyautogui
 
 
@@ -82,8 +83,8 @@ def color_tracker():
     import multithreaded_webcam as mw
 
     # You need to define HSV colour range MAKE CHANGE HERE
-    colorLower = None
-    colorUpper = None
+    colorLower = (79, 79, 255)
+    colorUpper = (0, 0, 255)
 
     # set the limit for the number of frames to store and the number that have seen direction change
     buffer = 20
@@ -103,7 +104,55 @@ def color_tracker():
 
     while True:
         # your code here
-        continue
+        frame = vs.read()
+        cv2.flip(frame, 1)
+
+        imutils.resize(frame, width = 600)
+        cv2.GaussianBlur(frame, (5,5), 0)
+        cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        #mask
+        mask = cv2.inRange(frame, colorLower, colorUpper)
+        erosion = cv2.erode(mask, None, iterations=2)
+        dilation = cv2.dilate(mask, None, iterations=2)
+        contours = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
+    # unsure about the list
+        center = None
+        if len(contours) > 0:
+            maxContour = max(contours, key = cv2.contourArea)
+            radius = cv2.minEnclosingCircle(maxContour)
+            if radius[1] > 10:
+                pts.appendleft(radius)
+        
+        if num_frames >= 10 and len(pts) >= 10:
+            first = pts[0]
+            tenth = pts[9]
+            dX = tenth[0][0] - first[0][0]
+            dY = tenth[0][1] - first[0][1]
+            threshold = 200
+            if abs(dX) > threshold or abs(dY) > threshold:
+                if abs(dX) > abs(dY):
+                    if dX > 0:
+                        direction = 'right'
+                        print('right')
+                    else:
+                        direction = 'left'
+                        print('left')
+                else:
+                    if dY > 0:
+                        direction = 'down'
+                        print('down')
+                    else:
+                        direction = 'up'
+                        print('up')
+                cv2.putText(frame, direction, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
+                if last_dir != direction:
+                    pyautogui.press(direction)
+                    print(last_dir)
+                    last_dir = direction
+        cv2.imshow('Game Control Window', frame)
+        cv2.waitKey(1)
+        num_frames += 1
+
         
 
 
