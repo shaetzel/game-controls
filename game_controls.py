@@ -112,12 +112,14 @@ def color_tracker():
         # unsure about the list
         center = None
         if len(contours) > 0:
+            print('contours', contours)
             maxContour = max(contours, key = cv2.contourArea)
             radius = cv2.minEnclosingCircle(maxContour)
             M = cv2.moments(maxContour)
             center = (int(M['m10'] / M['m00']), int(M['m01'] / M['m00']))
             if radius[1] > 10:
                 pts.appendleft(center)
+                print('pts', pts)
         
         if num_frames >= 10 and len(pts) >= 10:
             first = pts[0]
