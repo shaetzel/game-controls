@@ -77,8 +77,8 @@ def color_tracker():
     import multithreaded_webcam as mw
 
     # You need to define HSV colour range MAKE CHANGE HERE
-    colorLower = (79, 79, 255)
-    colorUpper = (0, 0, 255)
+    colorLower = (29, 86, 6)
+    colorUpper = (64, 255, 255)
 
     # set the limit for the number of frames to store and the number that have seen direction change
     buffer = 20
