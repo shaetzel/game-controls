@@ -118,6 +118,8 @@ def color_tracker():
             M = cv2.moments(maxContour)
             center = (int(M['m10'] / M['m00']), int(M['m01'] / M['m00']))
             if radius[1] > 10:
+                cv2.circle(frame, (int(radius[0][0]), int(radius[0][1])), int(radius[1]), (0,255,255), 2)
+                cv2.circle(frame, center, 5, (0,255,255), -1)
                 pts.appendleft(center)
                 print('pts', pts)
         
