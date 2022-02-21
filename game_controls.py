@@ -176,7 +176,7 @@ def finger_tracking():
         cv2.GaussianBlur(frame, (5,5), 0)
         cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        processedFrame = frame.process(frame)   #wut is hands we changed to handDetect
+        processedFrame = handDetect.process(frame)   #what is hands we changed to handDetect
         numFingers = 0
         majorFeatures = []
 
