@@ -55,21 +55,15 @@ def trackpad_mouse():
                 if abs(xdif) > abs(ydif):
                     if xdif > 0:
                         last_dir = 'right'
-                        print('right')
                     else:
                         last_dir = 'left'
-                        print('left')
                 else:
                     if ydif > 0:
                         last_dir = 'down'
-                        print('up')
                     else:
                         last_dir = 'up'
-                        print('down')
                 pyautogui.press(last_dir)
-                print(last_dir)
                 last_position = (x,y)
-                print(last_position)
 
     with mouse.Listener(on_move=on_move) as listener:
         listener.join() 
@@ -171,6 +165,70 @@ def finger_tracking():
     vs = mw.WebcamVideoStream().start()
 
     # put your code here
+    handDetect = mp.solutions.hands
+    handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    drawing = mp.solutions.drawing_utils
+    
+    while True:
+        frame = vs.read()
+        cv2.flip(frame, 1)
+        imutils.resize(frame, width = 600)
+        cv2.GaussianBlur(frame, (5,5), 0)
+        cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        processedFrame = handDetect.process(frame)   #wut is hands we changed to handDetect
+        numFingers = 0
+        majorFeatures = []
+
+        if processedFrame != None:                  # loop through number of hands
+            for hands in processedFrame:
+                for id, lm in enumerate(hands.landmark):
+                    height = frame.shape[0]
+                    width = frame.shape[1]
+                    x = lm.x*width
+                    y = lm.y*height
+                    cv2.circle(frame, (x,y), 3, (255, 0, 255), cv2.FILLED)
+                    majorFeatures.append((id,x,y))
+        
+        if len(majorFeatures) != 0:
+            #thumb 
+            if majorFeatures[4][1] < majorFeatures[3][1]:
+                numFingers += 1
+            # index finger
+            if majorFeatures[8][2] < majorFeatures[6][2]:
+                numFingers += 1
+            #middle finger
+            if majorFeatures[12][2] < majorFeatures[10][2]:
+                numFingers += 1
+            #ring finger
+            if majorFeatures[16][2] < majorFeatures[14][2]:
+                numFingers += 1
+            #little finger
+            if majorFeatures[20][2] < majorFeatures[18][2]:
+                numFingers += 1
+        
+        if numFingers == 1:
+            direction = 'right'
+        elif numFingers == 2:
+            direction = 'left'
+        elif numFingers == 3:
+            direction = 'up'
+        elif numFingers == 4:
+            direction = 'down'
+        elif numFingers == 5:
+            exit()
+        
+        pyautogui.press(direction)
+        cv2.putText(frame,str(int(numFingers)),(10,70),cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
+        cv2.imshow("Image", frame)
+        cv2.waitKey(1)
+
+        if last_dir != direction:
+            last_dir = direction
+
+
+    
+
 
 
 def unique_control():
