@@ -172,15 +172,15 @@ def finger_tracking():
 
     # put your code here
     handDetect = mp.solutions.hands
-    hands = -handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    hands = handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
     drawing = mp.solutions.drawing_utils
     
     while True:
         frame = vs.read()
-        cv2.flip(frame, 1)
-        imutils.resize(frame, width = 600)
-        cv2.GaussianBlur(frame, (5,5), 0)
-        cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        flippedFrame = cv2.flip(frame, 1)
+        resizedFrame = imutils.resize(flippedFrame, width = 600)
+        blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
+        HSVframe = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2RGB)
 
         processedFrame = hands.process(frame)   #what is hands we changed to handDetect
         numFingers = 0
