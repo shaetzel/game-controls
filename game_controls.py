@@ -78,7 +78,7 @@ def color_tracker():
 
     # You need to define HSV colour range MAKE CHANGE HERE
     colorLower = (29, 86, 6)
-    colorUpper = (64, 255, 255)
+    colorUpper = (100, 255, 255)
 
     # set the limit for the number of frames to store and the number that have seen direction change
     buffer = 20
@@ -126,8 +126,8 @@ def color_tracker():
         if num_frames >= 10 and len(pts) >= 10:
             first = pts[0]
             tenth = pts[9]
-            dX = tenth[0][0] - first[0][0]
-            dY = tenth[0][1] - first[0][1]
+            dX = tenth[0] - first[0]
+            dY = tenth[1] - first[1]
             threshold = 200
             if abs(dX) > threshold or abs(dY) > threshold:
                 if abs(dX) > abs(dY):
@@ -172,7 +172,7 @@ def finger_tracking():
 
     # put your code here
     handDetect = mp.solutions.hands
-    handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    hands = -handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
     drawing = mp.solutions.drawing_utils
     
     while True:
@@ -182,7 +182,7 @@ def finger_tracking():
         cv2.GaussianBlur(frame, (5,5), 0)
         cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        processedFrame = handDetect.process(frame)   #what is hands we changed to handDetect
+        processedFrame = hands.process(frame)   #what is hands we changed to handDetect
         numFingers = 0
         majorFeatures = []
 
