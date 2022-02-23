@@ -109,10 +109,8 @@ def color_tracker():
         erosion = cv2.erode(mask, None, iterations=2)
         dilation = cv2.dilate(erosion, None, iterations=2)
         contours,_ = cv2.findContours(dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # unsure about the list
         center = None
         if len(contours) > 0:
-            print('contours', contours)
             maxContour = max(contours, key = cv2.contourArea)
             radius = cv2.minEnclosingCircle(maxContour)
             M = cv2.moments(maxContour)
@@ -121,33 +119,28 @@ def color_tracker():
                 cv2.circle(frame, (int(radius[0][0]), int(radius[0][1])), int(radius[1]), (0,255,255), 2)
                 cv2.circle(frame, center, 5, (0,255,255), -1)
                 pts.appendleft(center)
-                print('pts', pts)
+
         
         if num_frames >= 10 and len(pts) >= 10:
             first = pts[0]
             tenth = pts[9]
             dX = tenth[0] - first[0]
             dY = tenth[1] - first[1]
-            threshold = 200
+            threshold = 100
             if abs(dX) > threshold or abs(dY) > threshold:
                 if abs(dX) > abs(dY):
                     if dX > 0:
                         direction = 'left'
-                        print('left')
                     else:
                         direction = 'right'
-                        print('right')
                 else:
                     if dY > 0:
                         direction = 'up'
-                        print('up')
                     else:
                         direction = 'down'
-                        print('down')
                 cv2.putText(frame, direction, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
                 if last_dir != direction:
                     pyautogui.press(direction)
-                    print(last_dir)
                     last_dir = direction
         cv2.imshow('Game Control Window', frame)
         cv2.waitKey(1)
