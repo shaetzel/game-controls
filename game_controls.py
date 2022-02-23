@@ -172,23 +172,24 @@ def finger_tracking():
         frame = vs.read()
         flippedFrame = cv2.flip(frame, 1)
         resizedFrame = imutils.resize(flippedFrame, width = 600)
-        blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
-        HSVframe = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2RGB)
+        #blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
+        HSVframe = cv2.cvtColor(resizedFrame, cv2.COLOR_BGR2RGB)
 
         processedFrame = hands.process(HSVframe)   
         numFingers = 0
         majorFeatures = []
 
-        if processedFrame. != 0:                  # loop through number of hands
-            for landmarks in processedFrame.:
+        if processedFrame.multi_hand_landmarks:                  # loop through number of hands
+            for landmarks in processedFrame.multi_hand_landmarks:
+
                 for id, lm in enumerate(landmarks.landmark):
-                    height = frame.shape[0]
-                    width = frame.shape[1]
-                    x = lm.x*width
-                    y = lm.y*height
-                    cv2.circle(frame, (x,y), 3, (255, 0, 255), cv2.FILLED)
-                    majorFeatures.append((id,x,y))
-        
+                    height = resizedFrame.shape[0]
+                    width = resizedFrame.shape[1]
+                    x = int (lm.x*width)
+                    y = int (lm.y*height)
+                    cv2.circle(resizedFrame, (x,y), 3, (255, 0, 255), cv2.FILLED)
+                    majorFeatures.append([id,x,y])
+                drawing.draw_landmarks(resizedFrame, landmarks, handDetect.HAND_CONNECTIONS)
         if len(majorFeatures) != 0:
             #thumb 
             if majorFeatures[4][1] < majorFeatures[3][1]:
@@ -208,22 +209,30 @@ def finger_tracking():
         
         if numFingers == 1:
             direction = 'right'
+            pyautogui.press(direction)
+            last_dir = direction
         elif numFingers == 2:
             direction = 'left'
+            pyautogui.press(direction)
+            last_dir = direction
         elif numFingers == 3:
             direction = 'up'
+            pyautogui.press(direction)
+            last_dir = direction
         elif numFingers == 4:
             direction = 'down'
+            pyautogui.press(direction)
+            last_dir = direction
         elif numFingers == 5:
             exit()
         
-        pyautogui.press(direction)
-        cv2.putText(frame,str(int(numFingers)),(10,70),cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
-        cv2.imshow("Image", frame)
+        
+        cv2.putText(resizedFrame,str(int(numFingers)),(10,70),cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
+        cv2.imshow("Image", resizedFrame)
         cv2.waitKey(1)
 
-        if last_dir != direction:
-            last_dir = direction
+        #if last_dir != direction:
+        #    last_dir = direction
 
 
     
