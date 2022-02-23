@@ -179,9 +179,9 @@ def finger_tracking():
         numFingers = 0
         majorFeatures = []
 
-        if len(processedFrame) != 0:                  # loop through number of hands
-            for item in processedFrame:
-                for id, lm in enumerate(item.landmark):
+        if processedFrame.muli_hand_landmarks != 0:                  # loop through number of hands
+            for landmarks in processedFrame.muli_hand_landmarks:
+                for id, lm in enumerate(landmarks.landmark):
                     height = frame.shape[0]
                     width = frame.shape[1]
                     x = lm.x*width
