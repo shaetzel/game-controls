@@ -175,7 +175,7 @@ def finger_tracking():
         blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
         HSVframe = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2RGB)
 
-        processedFrame = hands.process(frame)   #what is hands we changed to handDetect
+        processedFrame = hands.process(HSVframe)   
         numFingers = 0
         majorFeatures = []
 
