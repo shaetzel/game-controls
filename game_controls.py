@@ -132,18 +132,18 @@ def color_tracker():
             if abs(dX) > threshold or abs(dY) > threshold:
                 if abs(dX) > abs(dY):
                     if dX > 0:
-                        direction = 'right'
-                        print('right')
-                    else:
                         direction = 'left'
                         print('left')
+                    else:
+                        direction = 'right'
+                        print('right')
                 else:
                     if dY > 0:
-                        direction = 'down'
-                        print('down')
-                    else:
                         direction = 'up'
                         print('up')
+                    else:
+                        direction = 'down'
+                        print('down')
                 cv2.putText(frame, direction, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
                 if last_dir != direction:
                     pyautogui.press(direction)
