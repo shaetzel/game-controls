@@ -126,7 +126,7 @@ def color_tracker():
             tenth = pts[9]
             dX = tenth[0] - first[0]
             dY = tenth[1] - first[1]
-            threshold = 100
+            threshold = 150
             if abs(dX) > threshold or abs(dY) > threshold:
                 if abs(dX) > abs(dY):
                     if dX > 0:
