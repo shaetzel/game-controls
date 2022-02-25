@@ -167,6 +167,8 @@ def finger_tracking():
     handDetect = mp.solutions.hands
     hands = handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
     drawing = mp.solutions.drawing_utils
+
+    global last_dir
     
     while True:
         frame = vs.read()
@@ -207,24 +209,24 @@ def finger_tracking():
             if majorFeatures[20][2] < majorFeatures[18][2]:
                 numFingers += 1
         
-        if numFingers == 1:
+        if numFingers == 1 and last_dir != 'right':
             direction = 'right'
             pyautogui.press(direction)
             last_dir = direction
-        elif numFingers == 2:
+        elif numFingers == 2 and last_dir != 'left':
             direction = 'left'
             pyautogui.press(direction)
             last_dir = direction
-        elif numFingers == 3:
+        elif numFingers == 3 and last_dir != 'up':
             direction = 'up'
             pyautogui.press(direction)
             last_dir = direction
-        elif numFingers == 4:
+        elif numFingers == 4 and last_dir != 'down':
             direction = 'down'
             pyautogui.press(direction)
             last_dir = direction
-        elif numFingers == 5:
-            exit()
+        #elif numFingers == 5:
+            #exit()
         
         
         cv2.putText(resizedFrame,str(int(numFingers)),(10,70),cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
