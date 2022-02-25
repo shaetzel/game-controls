@@ -225,8 +225,9 @@ def finger_tracking():
             direction = 'down'
             pyautogui.press(direction)
             last_dir = direction
-        #elif numFingers == 5:
-            #exit()
+        elif numFingers == 5:
+            cv2.putText(resizedFrame,'HCI Rules!',(60,70),cv2.FONT_HERSHEY_SCRIPT_COMPLEX, 3, (255,0,255), 3)
+            
         
         
         cv2.putText(resizedFrame,str(int(numFingers)),(10,70),cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
