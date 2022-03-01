@@ -246,7 +246,7 @@ def unique_control():
     import speech_recognition as sr
     import pyttsx3
 
-    sr.init('nsss', False)
+    #sr.init('nsss', False)
     r = sr.Recognizer()
     global last_dir
     direction = ''
