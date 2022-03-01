@@ -243,8 +243,44 @@ def finger_tracking():
 
 
 def unique_control():
-    # put your code here
-    pass
+    import speech_recognition as sr
+    import pyttsx3
+
+    sr.init('nsss', False)
+    r = sr.Recognizer()
+    global last_dir
+    direction = ''
+
+    while(1):    
+      
+    # Exception handling to handle
+    # exceptions at the runtime
+        try:
+            
+            # use the microphone as source for input.
+            with sr.Microphone() as inputSource:
+                
+                # wait for a second to let the recognizer
+                # adjust the energy threshold based on
+                # the surrounding noise level 
+                r.adjust_for_ambient_noise(inputSource, duration=0.2)
+                
+                #listens for the user's input 
+                inputAudio = r.listen(inputSource)
+                
+                # Using ggogle to recognize audio
+                MyText = r.recognize_google(inputAudio)
+                direction = MyText.lower()
+                if direction != last_dir:
+                    pyautogui.press(direction)
+                    last_dir = direction
+                    print(direction)
+
+        except sr.RequestError as e:
+            print("Could not request results; {0}".format(e))
+            
+        except sr.UnknownValueError:
+            print("unknown error occured")
 
 def main():
     control_mode = input("How would you like to control the game? ")
