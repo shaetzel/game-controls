@@ -42,7 +42,6 @@ def trackpad_mouse():
     from pynput import mouse
 
     def on_move(x, y):
-        # put your code here
         global last_position
         global last_dir
         if last_position[0] == None or last_position[1] == None:
@@ -101,7 +100,6 @@ def color_tracker():
 
 
     while True:
-        # your code here
         frame = vs.read()
         flippedFrame = cv2.flip(frame, 1)
 
@@ -176,7 +174,6 @@ def finger_tracking():
     #Start video capture
     vs = mw.WebcamVideoStream().start()
 
-    # put your code here
     handDetect = mp.solutions.hands
     hands = handDetect.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
     drawing = mp.solutions.drawing_utils
