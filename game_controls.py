@@ -288,7 +288,6 @@ def unique_control():
                 if direction != last_dir and (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'):
                     pyautogui.press(direction)
                     last_dir = direction
-                    print(direction)
 
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
