@@ -10,7 +10,11 @@ last_dir = ''
 def keypress():
     ''' 
     Choose any four keys that a user can press to control the game.
-    Update this doc string with your choices. 
+    Function that allows the user to control the game using the T, H, G and F keys.
+    T - up
+    H - right
+    G - down
+    F - left
     '''
 
     import keyboard
@@ -18,15 +22,11 @@ def keypress():
     while(keyboard.is_pressed("esc") == False):
         if(keyboard.is_pressed('T')):
             pyautogui.press("up")
-            #print("up")
         elif(keyboard.is_pressed('H')):
-            #print("right")
             pyautogui.press("right") 
         elif(keyboard.is_pressed('G')):
-            #print("down")
             pyautogui.press("down")
         elif(keyboard.is_pressed('F')):
-            #print("left") 
             pyautogui.press("left")
 
  
@@ -69,6 +69,10 @@ def trackpad_mouse():
         listener.join() 
 
 def color_tracker():
+    '''
+    Control the game by moving a green object in the video frame to correspond
+    with the direction in which you want the game to move.
+    '''
     import cv2
     import imutils
     import numpy as np
@@ -104,6 +108,7 @@ def color_tracker():
         resizedFrame = imutils.resize(flippedFrame, width = 600)
         blurFrame = cv2.GaussianBlur(resizedFrame, (5,5), 0)
         HSVframe = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2HSV)
+
         #mask
         mask = cv2.inRange(HSVframe, colorLower, colorUpper)
         erosion = cv2.erode(mask, None, iterations=2)
@@ -151,6 +156,14 @@ def color_tracker():
 
 
 def finger_tracking():
+    '''
+    Control the game by holding up fingers in the video frame.
+    Hold up 1 to go right.
+    Hold up 2 to go left.
+    Hold up 3 to go up
+    Hold up 4 to go down.
+    Hold up 5 fingers to display a message on the screen.
+    '''
     import cv2
     import imutils
     import numpy as np
@@ -243,6 +256,10 @@ def finger_tracking():
 
 
 def unique_control():
+    '''
+    Control the game using voice input. You can say left, right, up or down to control how
+    the game moves.
+    '''
     import speech_recognition as sr
     import pyttsx3
 
@@ -268,7 +285,7 @@ def unique_control():
                 #listens for the user's input 
                 inputAudio = r.listen(inputSource)
                 
-                # Using ggogle to recognize audio
+                # Using google to recognize audio
                 MyText = r.recognize_google(inputAudio)
                 direction = MyText.lower()
                 if direction != last_dir and (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'):
