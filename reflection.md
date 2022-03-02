@@ -100,8 +100,8 @@ Voice control:
     where you have to memorize the corresponding direction for each finger. In terms of the five
     interaction rules, we felt as though 
     this control best corresponded with performance - verbalizing the outcome you want to see in the game. Additionally the interaction 
-    "visibility", due to the fact that the direction you say mimics the direction you want to see the snake moving in. In order to improve
-    this game control, we would need to determine the best way to make it more efficient.
+    "visibility" was shown, due to the fact that the direction you say mimics the direction you want to see the snake moving in. In order to 
+    improve this game control, we would need to determine the best way to make it more efficient.
 
 Conclusion:
     In our group, completing this project also brought up considerations of other topics we had discussed in class. Specifically for 
