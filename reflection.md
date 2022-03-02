@@ -85,23 +85,29 @@ Finger detection:
     visibility, thinking through doing, in our opinion. 
 
 Voice control:
-    When selecting which unique control we wanted to implement, we aimaed to find something that was more intuitive than some of the
+    When selecting which unique control we wanted to implement, we aimed to find something that was more intuitive than some of the
     other controls we'd implemented thus far. As a result, we landed on the idea of voice control, specifically a control in which the user
     had to say the direction they wanted the game (the snake in our case) to move in. To our surprise, this control was not very difficult
     to implement, due to existing Python packages and libraries. One thing we did find with this control is that it is extremely slow and
     inefficient. As a result, this particular control (at least how we've implemented it) does not operate fast enough to be sufficient
-    to control a game like the snake game. One major benefit of this control in our opinion though is the fact that it is highly 
-    intuitive. It does not require any conversion or memorization to simply say which direction you want the game to move in. This is
-    different than the finger detection, where you have to memorize the corresponding direction for each finger. In terms of the five
-    interaction rules, we felt as though this control best corresponded through performance - verbalizing the outcome you want to see in the game.
-    As well as visibility, because the direction you say mimics the direction you want to see the snake moving in. In order to improve
+    to control a game like the snake game. The snake game offers speed control options and even
+    after modifying the speed of the game to 
+    the lowest setting (displayed with the turtle icon), the voice control operations were still
+    not as fast as the other controls. One 
+    major benefit of this control in our opinion though is the fact that it is highly intuitive. It does not require any conversion or 
+    memorization to simply say which direction you want the game to move in. This is
+    different than the finger detection, 
+    where you have to memorize the corresponding direction for each finger. In terms of the five
+    interaction rules, we felt as though 
+    this control best corresponded with performance - verbalizing the outcome you want to see in the game. Additionally the interaction 
+    "visibility", due to the fact that the direction you say mimics the direction you want to see the snake moving in. In order to improve
     this game control, we would need to determine the best way to make it more efficient.
 
 Conclusion:
     In our group, completing this project also brought up considerations of other topics we had discussed in class. Specifically for 
     our unique control, as we were brainstorming the topic of accessibility was on the forefront of our minds. We discussed how someone
     who may not be able to interact with a snake game in the traditional sense might be able to play the game regardless. This is how
-    we ended up landing on audio input, because this couuld be an alternative game control that significantly opens up the
+    we ended up landing on audio input, because this could be an alternative game control that significantly opens up the
     accessibility of a lot of games similar to the snake game. This project brought to light the importance of considering a wide
     variety of options for how to implement the controls of different games, and how important it is that companies thoroughly study this
     in order to make games customizable for accessiblity purposes. 
