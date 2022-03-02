@@ -271,7 +271,7 @@ def unique_control():
                 # Using ggogle to recognize audio
                 MyText = r.recognize_google(inputAudio)
                 direction = MyText.lower()
-                if direction != last_dir:
+                if direction != last_dir and (direction == 'left' or direction == 'right' or direction == 'up' or direction == 'down'):
                     pyautogui.press(direction)
                     last_dir = direction
                     print(direction)
